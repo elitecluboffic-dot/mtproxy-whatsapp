@@ -1,16 +1,9 @@
-# Image resmi dari Meta/WhatsApp, sudah include HAProxy yang bicara
-# protokol WhatsApp asli (Jabber/XMPP untuk chat, HTTPS untuk media).
-# Source: https://github.com/WhatsApp/proxy
+# Image resmi Meta/WhatsApp
 FROM facebook/whatsapp_proxy:latest
 
-# Port-port yang disediakan image ini:
-#   80    -> HTTP biasa
-#   443   -> HTTPS (chat, terenkripsi) <-- dipakai untuk field "Port chat" + centang "Gunakan TLS"
-#   5222  -> Jabber/XMPP polos (tanpa TLS)
-#   587/7777 -> trafik media (*.whatsapp.net)
-#   8080/8443/8222 -> SAMA seperti di atas, TAPI mengharapkan PROXY protocol header
-#                     dari load balancer di depannya. JANGAN dipakai kalau expose langsung
-#                     ke internet tanpa LB — koneksi akan diputus sebelum handshake selesai.
-#   8199  -> statistik HAProxy (monitoring, sebaiknya jangan diexpose publik)
+# Timpa config resmi dengan versi yang sudah diaktifkan logging-nya.
+# Path ini sesuai dengan yang dipakai script "set_public_ip_and_start.sh" resmi
+# (baris #PUBLIC_IP tetap dipertahankan supaya proses substitusi IP saat start tetap jalan normal).
+COPY proxy_config.cfg /usr/local/etc/haproxy/haproxy.cfg
 
-EXPOSE 80 443 5222 587 7777
+EXPOSE 80 443 5222 587 7777 8080 8443 8222 8199
