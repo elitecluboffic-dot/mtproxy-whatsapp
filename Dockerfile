@@ -8,8 +8,9 @@ FROM facebook/whatsapp_proxy:latest
 #   443   -> HTTPS (chat, terenkripsi) <-- dipakai untuk field "Port chat" + centang "Gunakan TLS"
 #   5222  -> Jabber/XMPP polos (tanpa TLS)
 #   587/7777 -> trafik media (*.whatsapp.net)
-#   8080/8443/8222 -> sama seperti di atas tapi expect PROXY protocol (load balancer)
-#   8199  -> statistik HAProxy (monitoring)
-#
-# Rekomendasi resmi: untuk expose ke IP publik cukup pakai 443 (chat) dan 587 (media).
-EXPOSE 80 443 5222 587 7777 8080 8443 8222 8199
+#   8080/8443/8222 -> SAMA seperti di atas, TAPI mengharapkan PROXY protocol header
+#                     dari load balancer di depannya. JANGAN dipakai kalau expose langsung
+#                     ke internet tanpa LB — koneksi akan diputus sebelum handshake selesai.
+#   8199  -> statistik HAProxy (monitoring, sebaiknya jangan diexpose publik)
+
+EXPOSE 80 443 5222 587 7777
