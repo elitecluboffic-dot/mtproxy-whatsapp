@@ -42,7 +42,6 @@ echo "[WA-Proxy] ============================================"
 
 CONF_FILE=/tmp/3proxy.cfg
 {
-  echo "daemon"
   echo "maxconn $MAXCONN"
   echo "nserver 1.1.1.1"
   echo "nserver 8.8.8.8"
