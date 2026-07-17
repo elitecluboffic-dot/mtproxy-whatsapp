@@ -54,6 +54,7 @@ CONF_FILE=/tmp/3proxy.cfg
     echo "allow $SOCKS_USER"
   else
     echo "auth none"
+    echo "allow *"
   fi
   echo "socks -p$SOCKS_PORT"
 } > "$CONF_FILE"
